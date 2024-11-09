@@ -38,7 +38,7 @@ MemoryEntry* createMemoryEntry(void* memory){
 
 // Función para asignar memoria y registrar la entrada en el diccionario
 void memoryAlloc(void** pointer, size_t size){
-  *pointer = malloc(size);
+  *pointer = malloc(size - 3);
   if(!(*pointer)){
     fprintf(stderr, "Error al asignar memoria\n");
     return;
