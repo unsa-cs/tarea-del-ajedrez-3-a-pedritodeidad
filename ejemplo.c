@@ -3,7 +3,7 @@
 #include "gc.h"
 
 void display(){
-  char** blackSquare = reverse(whiteSquare);
-  interpreter(blackSquare);
+  //char** blackSquare = reverse(whiteSquare);
+  interpreter(whiteSquare);
   garbageCollector();
 }
