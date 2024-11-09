@@ -5,9 +5,9 @@
 
 char** allocateMemory(int rows, size_t cols){
   char** newFig;
-  memoryAlloc((void**)&newFig, sizeof(char*)*(rows + 1));
+  memoryAlloc((void**)&newFig, sizeof(char*)*(rows));
   for(int i = 0; i < rows; i++)
-    memoryAlloc((void**)&newFig[i], sizeof(char)*(cols + 1));
+    memoryAlloc((void**)&newFig[i], sizeof(char)*(cols));
   return newFig;
 }
 
