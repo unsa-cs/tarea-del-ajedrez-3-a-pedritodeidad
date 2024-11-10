@@ -27,8 +27,8 @@ char** reverse(char** fig){
   int cols = 0;
   while(fig[0][++cols]);
 
-  printf("rows: %d\n", rows);
-  printf("cols: %d\n", cols);
+  fprintf(stderr, "rows: %d\n", rows);
+  fprintf(stderr, "cols: %d\n", cols);
 
   char** newFig = allocateMemory(rows, cols);
 
