@@ -4,6 +4,11 @@
 
 void display(){
   char** blackSquare = reverse(whiteSquare);
-  interpreter(whiteSquare);
+  //char** figure;
+  //figure = (char**)malloc(sizeof(char**));
+  //*figure = (char*)malloc(sizeof(char*));
+  //figure[0][0] = 0; 
+  //char** prueba = reverse(figure);
+  interpreter(blackSquare);
   garbageCollector();
 }

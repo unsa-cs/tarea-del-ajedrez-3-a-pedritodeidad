@@ -38,7 +38,7 @@ MemoryEntry* createMemoryEntry(void* memory){
 
 // Función para asignar memoria y registrar la entrada en el diccionario
 void memoryAlloc(void** pointer, size_t size){
-  *pointer = malloc(size - 3);
+  *pointer = malloc(size);
   if(!(*pointer)){
     fprintf(stderr, "Error al asignar memoria\n");
     return;
@@ -67,6 +67,7 @@ void addPointer(void** new_pointer, void* existing_memory){
 // Función para desvincular un puntero de la entrada de memoria correspondiente
 void unregisterPointer(void** pointer){
   MemoryEntry* current = memoryList;
+  MemoryEntry* prevEntry = NULL;
   while(current){
     PointerNode* prev = NULL;
     PointerNode* ptr = current->pointers;
@@ -77,11 +78,20 @@ void unregisterPointer(void** pointer){
         else
           current->pointers = ptr->next;
         free(ptr);
+        if(current->pointers == NULL){
+          if(prevEntry)
+            prevEntry->next = current->next;
+          else
+            memoryList = current->next;
+          free(current->pointers);
+          free(current);   
+        }
         return;
       }
       prev = ptr;
       ptr = ptr->next;
     }
+    prevEntry = current;
     current = current->next;
   }
 }
