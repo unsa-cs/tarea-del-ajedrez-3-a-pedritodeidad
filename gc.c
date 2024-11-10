@@ -106,6 +106,12 @@ void garbageCollector(){
       currentEntry = currentEntry->next;
     }else{
       // Sin referencias activas, liberar memoria
+      PointerNode* ptr = currentEntry->pointers;
+      while(ptr){
+        PointerNode* tofree = ptr;
+        ptr = ptr->next;
+        free(tofree);
+      }
       free(currentEntry->memory);
       if(prevEntry)
         prevEntry->next = currentEntry->next;
