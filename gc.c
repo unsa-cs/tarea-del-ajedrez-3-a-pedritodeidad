@@ -116,6 +116,7 @@ void garbageCollector(){
       free(toFree);
     }
   }
+  countMemoryEntries(); 
 }
 
 int countMemoryEntries(){

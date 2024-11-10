@@ -38,7 +38,7 @@ char** reverse(char** fig){
     newFig[i][cols] = 0;
   }
   newFig[rows] = 0;
-  unlinkMemory(newFig);
+  //unlinkMemory(newFig);
   return newFig;
 }
 
