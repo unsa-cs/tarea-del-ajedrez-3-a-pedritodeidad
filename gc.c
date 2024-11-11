@@ -83,6 +83,10 @@ void unregisterPointer(void** pointer){
         ///////////////////////
         return;
       }
+      // Para comprobar el pos 58
+      if(ptr->pointer != pointer && ptr->next == NULL)
+        fprintf(stderr, "Falta uno :,c\n");
+      ///////////////////////////
       prev = ptr;
       ptr = ptr->next;
     }
