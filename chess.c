@@ -13,8 +13,20 @@ char** allocateMemory(int rows, size_t cols){
 
 void unlinkMemory(char** fig){
   countMemoryEntries();
-  for(int i = 0; fig[i]; i++)
+  for(int i = 0; fig[i]; i++){
     unregisterPointer((void**)&fig[i]);
+    //Para comprobar si dicho puntero se libero
+    fprintf(stderr, "Liberado: %d\n", i);
+    countMemoryEntries();
+    if(i == 57){
+      // Por si acaso hay un problema en unregisterPointer
+      // El problema esta en la fila 58, fig[58]
+      unregisterPointer((void**)&fig[i + 1]);
+      fprintf(stderr, "Liberado: %d\n", i + 1);
+      countMemoryEntries();
+    }
+    ////////////////////////////////////////////
+  }
   countMemoryEntries();
   unregisterPointer((void**)&fig);
   countMemoryEntries();
@@ -27,9 +39,6 @@ char** reverse(char** fig){
   int cols = 0;
   while(fig[0][++cols]);
 
-  fprintf(stderr, "rows: %d\n", rows);
-  fprintf(stderr, "cols: %d\n", cols);
-
   char** newFig = allocateMemory(rows, cols);
 
   for(int i = 0; fig[i]; i++){
@@ -38,7 +47,7 @@ char** reverse(char** fig){
     newFig[i][cols] = 0;
   }
   newFig[rows] = 0;
-  //unlinkMemory(newFig);
+  unlinkMemory(newFig);
   return newFig;
 }
 

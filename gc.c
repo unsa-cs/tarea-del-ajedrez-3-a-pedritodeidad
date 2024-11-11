@@ -67,10 +67,10 @@ void addPointer(void** new_pointer, void* existing_memory){
 // Función para desvincular un puntero de la entrada de memoria correspondiente
 void unregisterPointer(void** pointer){
   MemoryEntry* current = memoryList;
-  MemoryEntry* prevEntry = NULL;
   while(current){
     PointerNode* prev = NULL;
     PointerNode* ptr = current->pointers;
+    // Comprobar si el ptr aun existe pero no es igual al 'pointer'
     while(ptr){
       if(ptr->pointer == pointer){
         if(prev)
@@ -78,20 +78,14 @@ void unregisterPointer(void** pointer){
         else
           current->pointers = ptr->next;
         free(ptr);
-        if(current->pointers == NULL){
-          if(prevEntry)
-            prevEntry->next = current->next;
-          else
-            memoryList = current->next;
-          free(current->pointers);
-          free(current);   
-        }
+        // Comprobar liberacion
+        fprintf(stderr, "Liberado prt(1)\n");
+        ///////////////////////
         return;
       }
       prev = ptr;
       ptr = ptr->next;
     }
-    prevEntry = current;
     current = current->next;
   }
 }
@@ -101,13 +95,6 @@ void garbageCollector(){
   MemoryEntry* prevEntry = NULL;
   MemoryEntry* currentEntry = memoryList;
   while(currentEntry){
-    PointerNode* ptr = currentEntry->pointers;
-    while(ptr){
-      PointerNode* tofree = ptr;
-      ptr = ptr->next;
-      free(tofree);
-    }
-    currentEntry->pointers = NULL;
     if(currentEntry->pointers){
       prevEntry = currentEntry;
       currentEntry = currentEntry->next;
@@ -123,7 +110,6 @@ void garbageCollector(){
       free(toFree);
     }
   }
-  countMemoryEntries(); 
 }
 
 int countMemoryEntries(){
