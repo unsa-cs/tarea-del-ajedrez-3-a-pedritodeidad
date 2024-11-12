@@ -3,6 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+//Para usar assert
+#include <cassert>
 
 // Definición de la estructura Node para manejar la lista de punteros en cada entrada de memoria
 typedef struct PointerNode{
@@ -43,6 +45,8 @@ void memoryAlloc(void** pointer, size_t size){
     fprintf(stderr, "Error al asignar memoria\n");
     return;
   }
+  else
+    fprintf(stderr, "Se asigno correctamente\n");
   MemoryEntry* entry = createMemoryEntry(*pointer);
   entry->pointers = createPointerNode(pointer);
   entry->next = memoryList;
@@ -71,6 +75,7 @@ void unregisterPointer(void** pointer){
     PointerNode* prev = NULL;
     PointerNode* ptr = current->pointers;
     // Comprobar si el ptr aun existe pero no es igual al 'pointer'
+    assert(ptr);
     while(ptr){
       if(ptr->pointer == pointer){
         if(prev)
@@ -83,10 +88,6 @@ void unregisterPointer(void** pointer){
         ///////////////////////
         return;
       }
-      // Para comprobar el pos 58
-      if(ptr->pointer != pointer && ptr->next == NULL)
-        fprintf(stderr, "Falta uno :,c\n");
-      ///////////////////////////
       prev = ptr;
       ptr = ptr->next;
     }

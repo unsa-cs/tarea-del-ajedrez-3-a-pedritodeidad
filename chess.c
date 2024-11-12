@@ -6,8 +6,13 @@
 char** allocateMemory(int rows, size_t cols){
   char** newFig;
   memoryAlloc((void**)&newFig, sizeof(char*)*(rows + 1));
-  for(int i = 0; i < rows; i++)
+  fprintf(stderr, "Todo correcto :)\n");
+  countMemoryEntries();
+  for(int i = 0; i < rows; i++){
     memoryAlloc((void**)&newFig[i], sizeof(char)*(cols + 1));
+    fprintf(stderr, "Prueba: %d\n", i);//
+    countMemoryEntries();
+  }
   return newFig;
 }
 
@@ -28,6 +33,7 @@ void unlinkMemory(char** fig){
     ////////////////////////////////////////////
   }
   countMemoryEntries();
+  //Algo raro pasa aqui :v
   unregisterPointer((void**)&fig);
   countMemoryEntries();
 }
