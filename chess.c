@@ -17,16 +17,17 @@ int countColumnas(char** figura) {
   return count;
 }
 
-void allocateMemory(char*** newFig, int rows, size_t cols){
+char** allocateMemory(char*** newFig, int rows, size_t cols){
   memoryAlloc((void**)newFig, sizeof(char*)*(rows + 1));
   for(int i = 0; i < rows; i++)
-    memoryAlloc((void**)(*newFig + i), sizeof(char)*(cols + 1));
+    memoryAlloc((void**)&(*newFig)[i], sizeof(char)*(cols + 1));
+  return *newFig;
 }
 
 void unlinkMemory(char*** fig){
   countMemoryEntries();
   for(int i = 0; (*fig)[i]; i++)
-    unregisterPointer((void**)(*fig + i));
+    unregisterPointer((void**)&(*fig)[i]);
   countMemoryEntries();
   unregisterPointer((void**)fig);
   countMemoryEntries();
@@ -39,8 +40,7 @@ char** reverse(char** fig){
   int cols = 0;
   while(fig[0][++cols]);
 
-  char** newFig;
-  allocateMemory(&newFig, rows, cols);
+  char** newFig = allocateMemory(&newFig, rows, cols);
 
   for(int i = 0; i < rows; i++) {
     for(int j = 0; j < cols; j++) {
@@ -51,6 +51,7 @@ char** reverse(char** fig){
         case '@': newFig[i][j] = '.'; break;
         default: newFig[i][j] = fig[i][j];
       }
+      newFig[i][cols] = 0;
     }
   }
   newFig[rows] = 0;
