@@ -45,8 +45,6 @@ void memoryAlloc(void** pointer, size_t size){
     fprintf(stderr, "Error al asignar memoria\n");
     return;
   }
-  else
-    fprintf(stderr, "Se asigno correctamente\n");
   MemoryEntry* entry = createMemoryEntry(*pointer);
   entry->pointers = createPointerNode(pointer);
   entry->next = memoryList;
@@ -74,8 +72,7 @@ void unregisterPointer(void** pointer){
   while(current){
     PointerNode* prev = NULL;
     PointerNode* ptr = current->pointers;
-    // Comprobar si el ptr aun existe pero no es igual al 'pointer'
-    assert(ptr);
+    //assert(ptr);
     while(ptr){
       if(ptr->pointer == pointer){
         if(prev)
@@ -83,10 +80,7 @@ void unregisterPointer(void** pointer){
         else
           current->pointers = ptr->next;
         free(ptr);
-        // Comprobar liberacion
-        fprintf(stderr, "Liberado prt(1)\n");
-        ///////////////////////
-        return;
+       return;
       }
       prev = ptr;
       ptr = ptr->next;
