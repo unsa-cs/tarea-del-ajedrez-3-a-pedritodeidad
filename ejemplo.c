@@ -4,6 +4,7 @@
 
 void display(){
   char** blackSquare = reverse(whiteSquare);
-  interpreter(blackSquare);
+  char** joinbw = join(blackSquare, whiteSquare);
+  interpreter(joinbw);
   garbageCollector();
 }
