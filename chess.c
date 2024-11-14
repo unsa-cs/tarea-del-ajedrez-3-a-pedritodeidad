@@ -34,11 +34,8 @@ void unlinkMemory(char*** fig){
 }
 
 char** reverse(char** fig){
-  int rows = 0;
-  while(fig[++rows]);
-  
-  int cols = 0;
-  while(fig[0][++cols]);
+  int rows = countFilas(fig);
+  int cols = countColumnas(fig);
 
   char** newFig = allocateMemory(&newFig, rows, cols);
 
